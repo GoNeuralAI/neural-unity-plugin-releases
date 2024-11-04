@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=a7545959e76727846b66d2f39b972fa1&amp;type=3#GlobalStyle" />
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/Panels/Settings/NeuralSettingsWindow.uss?fileID=7433441132597879392&amp;guid=0c8313bd0c953d14987471fc983873f8&amp;type=3#NeuralSettingsWindow" />
+    <ui:VisualElement class="root-container">
+        <ui:VisualElement class="main-container">
+            <ui:Label text="API Key" class="label" />
+            <ui:TextField name="apiKey" class="input" />
+            <!-- <ui:TextField name="baseUrl" class="input" /> -->
+            <ui:Label text="Visit app.goneural.ai to create an API key." class="label" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

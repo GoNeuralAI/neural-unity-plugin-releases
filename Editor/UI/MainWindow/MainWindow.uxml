@@ -1,0 +1,41 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=a7545959e76727846b66d2f39b972fa1&amp;type=3#GlobalStyle" />
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/MainWindow/MainWindow.uss?fileID=7433441132597879392&amp;guid=8b92925b3422bfe40ad7fc1637df3326&amp;type=3#MainWindow" />
+    <ui:VisualElement class="root-container">
+        <ui:VisualElement class="header-logo">
+            <ui:VisualElement class="logo" />
+        </ui:VisualElement>
+        <ui:VisualElement class="main-container">
+            <ui:VisualElement name="mainPanel" class="main-panel">
+                <ui:ScrollView name="navigation" class="navigation">
+                    <Neural.Button name="route-library" text="My Library" icon="library" />
+                    <ui:Label text="AI Toolkit" class="nav-label" />
+                    <Neural.Button name="route-textTo3d" text="Text to 3D" icon="text-to-3d" />
+                    <Neural.Button name="route-imageTo3d" text="Image to 3D" icon="image-to-3d" />
+                    <Neural.Button name="route-textToMaterial" text="Text to Material" icon="text-to-material" />
+                    <ui:VisualElement style="flex-grow: 1" />
+                    <Neural.Button name="documentation" text="Documentation" icon="documentation" />
+                    <Neural.Button name="settings" text="Settings" icon="settings" />
+                </ui:ScrollView>
+                <ui:VisualElement name="componentConfig" class="component-config hide">
+                    <ui:VisualElement name="header" class="header">
+                        <ui:Label name="componentTitle" class="component-title" />
+                        <Neural.Icon name="btnBack" icon="chevron-left" class="btn-back" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="header-bottom-border" />
+                        <ui:ScrollView class="config-content-scroll">
+                            <ui:VisualElement class="config-content" name="configContent"  />
+                        </ui:ScrollView>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="secondaryPanel" class="secondary-panel">
+                <ui:VisualElement name="assetContent" class="asset-content">
+                    <ui:ScrollView name="assetContainer" class="asset-container">
+                        <ui:VisualElement name="assetGrid" class="asset-grid" />
+                    </ui:ScrollView>
+                </ui:VisualElement>
+                <ui:VisualElement name="previewContent" class="preview-content" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

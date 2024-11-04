@@ -1,0 +1,22 @@
+{
+  "name": "com.neural.unity",
+  "version": "1.0.0",
+  "displayName": "Neural",
+  "description": "",
+  "unity": "2022.3",
+  "unityRelease": "41f1",
+  "documentationUrl": "https://docs.goneural.ai",
+  "changelogUrl": "https://docs.goneural.ai",
+  "licensesUrl": "https://docs.goneural.ai",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
+    "com.unity.cloud.gltfast": "6.7.1",
+    "com.unity.shadergraph": "14.0.11"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Neural",
+    "email": "unity@goneural.ai",
+    "url": "https://goneural.ai/"
+  }
+}

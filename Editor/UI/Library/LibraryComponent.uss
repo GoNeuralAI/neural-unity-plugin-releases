@@ -1,0 +1,8 @@
+.library-config .checkbox {
+	margin: 0 8px;
+}
+
+.library-config .filter-label {
+	margin-top: 16px;
+	border-color: red;
+}

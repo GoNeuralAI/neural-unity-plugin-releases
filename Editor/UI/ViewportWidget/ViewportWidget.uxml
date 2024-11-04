@@ -1,0 +1,29 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/ViewportWidget/ViewportWidget.uss?fileID=7433441132597879392&amp;guid=ddc3a91ede48af042b2adaa275212b61&amp;type=3#ViewportWidget" />
+    <ui:Image name="previewImage" class="preview-image" />
+    <ui:VisualElement name="errorContainer" class="viewport-error-container">
+        <ui:Image class="viewport-error-icon" />
+		<ui:Label class="viewport-error-label" text="An error occurred while loading the asset." />
+    </ui:VisualElement>
+    <ui:VisualElement name="toolbarContainer" class="viewport-toolbar-container">
+        <ui:VisualElement name="toolbar" class="viewport-toolbar">
+            <Neural.Icon name="toggleGrid" icon="grid" tooltip="Show Grid" />
+            <ui:VisualElement class="divider" />
+            <Neural.Icon name="toggleLighting" icon="lighting" tooltip="Show Lighting" />
+            <Neural.Icon name="toggleWireframe" icon="mesh" tooltip="Show Wireframe" />
+            <Neural.Icon name="toggleTexture" icon="texture" tooltip="Show Texture" />
+            <ui:VisualElement class="divider" />
+            <Neural.Icon name="btnImport" icon="download" tooltip="Add to Project" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="stats" class="viewport-stats">
+        <ui:VisualElement class="viewport-stats-row first">
+            <ui:Label text="Vertices" />
+		    <ui:Label name="statVertices" />
+        </ui:VisualElement>
+		<ui:VisualElement class="viewport-stats-row">
+			<ui:Label text="Triangles" />
+		    <ui:Label name="statTriangles" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

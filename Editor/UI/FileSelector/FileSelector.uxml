@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/FileSelector/FileSelector.uss?fileID=7433441132597879392&amp;guid=1ef7dc819e857fa43936125c1ee75eea&amp;type=3#FileSelector" />
+    <ui:Label name="label" class="label hide" />
+    <ui:VisualElement class="file-selector-container">
+        <ui:VisualElement name="selectFileButton" class="button">
+            <ui:Image style="--unity-image: resource('Icons/folder')" /> 
+            <ui:Label text="Browse"/>
+        </ui:VisualElement>
+        <ui:TextField name="textField" picking-mode="Ignore" readonly="true" class="input" />
+    </ui:VisualElement>
+    <ui:VisualElement name="previewContainer" class="file-selector-preview">
+        <ui:Image name="preview" class="file-selector-preview-image" />
+    </ui:VisualElement>
+</ui:UXML>

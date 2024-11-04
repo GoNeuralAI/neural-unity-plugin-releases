@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/Library/LibraryComponent.uss?fileID=7433441132597879392&amp;guid=fda97c0bc9eb5814b8dfd7e494514e0f&amp;type=3#LibraryComponent" />
+    <ui:VisualElement class="library-config">
+        <ui:Label text="Search" display-tooltip-when-elided="true" class="label" />
+        <ui:TextField name="search" picking-mode="Ignore" max-length="300" class="input" />
+        <ui:Label text="Type Options" display-tooltip-when-elided="true" class="label filter-label" />
+        <ui:Toggle name="showMesh" label="Mesh" class="checkbox" />
+        <ui:Toggle name="showMaterial" label="Material" class="checkbox" />
+        <ui:Label text="Filter Options" display-tooltip-when-elided="true" class="label filter-label" />
+        <ui:Toggle name="showFavorites" label="Show Favorites" class="checkbox" />
+    </ui:VisualElement>
+</ui:UXML>

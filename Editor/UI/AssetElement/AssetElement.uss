@@ -1,0 +1,140 @@
+.asset-element {
+    width: 100%;
+    min-height: 180px;
+    flex-direction: column;
+    padding: 4px;
+    border-radius: 8px;
+    border-color: transparent;
+    border-width: 1px;
+    overflow: hidden;
+}
+
+.asset-element.selected {
+    border-color: var(--color-button-primary-default);
+    background-color: var(--color-button-borderless-hover);
+}
+
+.asset-element:hover {
+    background-color: var(--color-button-borderless-hover);
+}
+
+.asset-element:hover .actions {
+    opacity: 1;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 180px;
+    display: none;
+    overflow: hidden;
+}
+
+.actions {
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    flex-direction: row;
+    border-width: 1px;
+    display: none;
+    opacity: 0;
+}
+
+.selected .actions {
+    opacity: 1;
+}
+
+.actions .icon {
+    margin-right: 6px;
+}
+
+.progress-bar {
+    position: absolute;
+    left: 8px;
+    bottom: 6px;
+    display: none;
+    width: 100%;
+    height: 12px;
+}
+
+.progress-bar .unity-progress-bar__background {
+    background-color: var(--color-button-outlines);
+    border-radius: 4px;
+    border-width: 0;
+}
+
+.progress-bar .unity-progress-bar__progress {
+    background-color: var(--accent);
+    margin: 2px 2px;
+    border-radius: 3px;
+}
+
+.spinner-container {
+    width: 100%;
+    height: 180px;
+    border-width: 1px;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner-container:hover {
+    background-color: var(--color-button-borderless-hover);
+}
+
+.spinner {
+    width: 35px;
+    height: 35px;
+    --unity-image: resource('Icons/spinner');
+}
+
+.error-container {
+    width: 100%;
+	height: 180px;
+	justify-content: center;
+	align-items: center;
+    display: none;
+}
+
+.error-container:hover {
+    background-color: var(--color-button-borderless-hover);
+}
+
+.error-label {
+    font-size: 13px;
+    width: 100%;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.icon-failed {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 8px;
+    --unity-image: resource('Icons/error');
+}
+
+.label-container {
+    position: absolute;
+    background-color: var(--color-button-outlines);
+    top: 8px;
+    left: 8px;
+    border-radius: 4px;
+    padding: 0 2px;
+    display: none;
+    color: white;
+}
+
+.label-container .label {
+    font-size: 11px;
+}
+
+.asset-element.selected .label-container {
+    background-color: var(--color-button-primary-default);
+    color: black;
+}
+
+.asset-element:hover .label-container {
+    background-color: var(--color-button-primary-default);
+    color: black;
+}

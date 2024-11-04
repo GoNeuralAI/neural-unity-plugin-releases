@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/TextToMaterialComponent/TextToMaterialComponent.uss?fileID=7433441132597879392&amp;guid=f932dea0ee3b7b0459c1a378cc667a77&amp;type=3#TextToMaterialComponent" />
+    <Neural.TextArea name="prompt" label="Prompt" max-length="200" />
+    <ui:Toggle name="hasNegativePrompt" label="Negative Prompt" class="checkbox" />
+    <Neural.TextArea name="negativePrompt" class="hide" max-length="200" />
+    <ui:Toggle name="hasSeed" label="Locked Seed" class="checkbox" />
+    <ui:TextField name="seed" value="0" keyboard-type="NumberPad" input-validation-type="Integer" class="input" readonly="true" />
+    <Neural.Button name="generateBtn" text="Generate" accent="true" icon="wand" />
+</ui:UXML>

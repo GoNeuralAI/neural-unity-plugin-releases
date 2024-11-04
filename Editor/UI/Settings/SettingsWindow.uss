@@ -1,0 +1,14 @@
+.root-container {
+    background-color: var(--color-background-default);
+    padding: 20px;
+}
+
+.main-container {
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.input .unity-text-element {
+    margin: 0 4px;
+    -unity-text-align: middle-left;
+}

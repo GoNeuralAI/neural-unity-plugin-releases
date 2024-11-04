@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/Controls/AssetElement/AssetElement.uss?fileID=7433441132597879392&amp;guid=8771c7f8f4be54249b97f834ba265269&amp;type=3#AssetElement" />
+    <ui:VisualElement name="spinnerContainer" class="spinner-container">
+    	<ui:Image name="spinner" class="spinner" />
+    </ui:VisualElement>
+    <ui:VisualElement name="errorContainer" class="error-container">
+        <ui:Image name="iconFailed" class="icon-failed" />
+        <ui:Label text="Failed to load asset" class="error-label" />
+    </ui:VisualElement>
+    <ui:VisualElement name="thumbnail" class="thumbnail" />
+    <ui:VisualElement name="labelContainer" class="label-container">
+		<ui:Label name="labelText" class="label" />
+    </ui:VisualElement>
+    <ui:ProgressBar name="progressBar" class="progress-bar" />
+    <ui:VisualElement name="actions" class="actions">
+        <Neural.Icon name="btnImport" icon="download" tooltip="Add to Project" />
+        <Neural.Icon name="btnFavorite" icon="star-outline" tooltip="Set Favorite" />
+        <Neural.Icon name="btnFolder" icon="folder" tooltip="Show in Explorer" />
+        <Neural.Icon name="btnRemove" icon="delete" tooltip="Delete" style="margin-right: 0" />
+    </ui:VisualElement>
+</ui:UXML>

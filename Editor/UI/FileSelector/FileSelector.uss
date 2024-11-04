@@ -1,0 +1,74 @@
+.file-selector-container {
+    flex-direction: row;
+    width: 100%;
+    height: 40px;
+    border-radius: 9px;
+    border-width: 1px;
+    border-color: var(--color-button-outlines);
+    background-color: var(--color-background-input);
+    padding: 0;
+    margin-top: 0;
+}
+
+.file-selector-container .input {
+    flex-basis: 50%;
+    flex-grow: 1;
+    height: 38px !important;
+    margin: 0;
+}
+
+.file-selector-container .input .unity-text-field__input {
+    border-width: 0 !important;
+    height: 38px !important;
+    margin-right: 8px;
+}
+
+.file-selector-container .input:focus .unity-text-field__input {
+	background-color: var(--color-background-input);
+}
+
+.file-selector-container .button {
+    flex-basis: 110px;
+    flex-shrink: 1;
+    height: 38px;
+    margin: 0;
+    border-width: 0;
+    background-color: var(--color-button-secondary-default);
+    transition: none;
+}
+
+.file-selector-container .button:enabled:hover {
+    background-color: var(--color-button-icon-hover);
+}
+
+.file-selector-container .button .unity-image {
+    width: 30px;
+    height: 30px;
+    margin: 5px 0 5px 8px;
+    border-width: 1px;
+}
+
+.file-selector-container .button .unity-label {
+    color: var(--text-color);
+    font-size: 15px;
+    margin: 10px;
+    -unity-text-align: middle-left;
+    -unity-font-style: bold;
+}
+
+.file-selector-preview {
+    margin-top: 8px;
+    border-width: 1px;
+    border-radius: 8px;
+    border-color: var(--color-button-outlines);
+}
+
+.file-selector-preview-image {
+    margin: 8px;
+    padding: 0;
+    width: auto;
+    height: auto;
+    max-height: 300px;
+    border-radius: 8px;
+    -unity-background-scale-mode: scale-to-fit;
+}
