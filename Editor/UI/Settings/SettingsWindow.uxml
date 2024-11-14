@@ -6,7 +6,11 @@
             <ui:Label text="API Key" class="label" />
             <ui:TextField name="apiKey" class="input" />
             <!-- <ui:TextField name="baseUrl" class="input" /> -->
-            <ui:Label text="Visit app.goneural.ai to create an API key." class="label" />
+            <ui:VisualElement class="visit-info">
+                <ui:Label text="Visit" class="label" />
+                <ui:Label name="goNeuralLink" text="app.goneural.ai" class="label link" />
+                <ui:Label text="to create an API key." class="label" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

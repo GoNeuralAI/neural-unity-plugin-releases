@@ -12,3 +12,7 @@
     margin: 0 4px;
     -unity-text-align: middle-left;
 }
+
+.visit-info {
+    flex-direction: row;
+}

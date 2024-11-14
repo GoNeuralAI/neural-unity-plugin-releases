@@ -203,7 +203,7 @@
 }
 
 .button-accent {
-    margin-top: 16px;
+    margin-top: 4px;
     justify-content: center;
     background-color: var(--color-button-primary-default);
 }
@@ -291,4 +291,13 @@ icon:disabled .icon-image {
 
 .unity-base-slider__dragger-border {
     display: none;
+}
+
+.link {
+    color: var(--color-button-primary-default);
+    cursor: link;
+}
+
+.link:hover {
+    color: var(--color-button-primary-hover);
 }

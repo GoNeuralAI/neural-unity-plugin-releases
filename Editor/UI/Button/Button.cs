@@ -14,6 +14,7 @@ namespace Neural
         public new class UxmlTraits : VisualElement.UxmlTraits
         {
             UxmlStringAttributeDescription m_Text = new UxmlStringAttributeDescription { name = "text", defaultValue = "Button" };
+            UxmlStringAttributeDescription m_Tooltip = new UxmlStringAttributeDescription { name = "tooltip", defaultValue = "" };
             UxmlStringAttributeDescription m_Icon = new UxmlStringAttributeDescription { name = "icon", defaultValue = "" };
             UxmlBoolAttributeDescription m_Disabled = new UxmlBoolAttributeDescription { name = "disabled", defaultValue = false };
             UxmlBoolAttributeDescription m_Secondary = new UxmlBoolAttributeDescription { name = "secondary", defaultValue = false };
@@ -34,6 +35,7 @@ namespace Neural
         }
 
         public string Text { get; private set; }
+        public string Tooltip { get; private set; }
         public string IconSource { get; private set; }
         public bool Disabled { get; private set; }
         public bool Secondary { get; private set; }
@@ -76,6 +78,7 @@ namespace Neural
 
             Root.RegisterCallback<PointerDownEvent>(OnPointerDown);
             Root.RegisterCallback<PointerUpEvent>(OnPointerUp);
+            Root.tooltip = Tooltip;
 
             Add(Root);
         }
@@ -88,6 +91,12 @@ namespace Neural
         private void OnPointerUp(PointerUpEvent evt)
         {
             Root.RemoveFromClassList("active");
+        }
+
+        public void SetTooltip(string tooltip)
+        {
+            Tooltip = tooltip;
+            Root.tooltip = tooltip;
         }
     }
 }

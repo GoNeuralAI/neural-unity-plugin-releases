@@ -16,6 +16,11 @@ namespace Neural
         private readonly Dictionary<string, Asset> Assets = new();
         private readonly Dictionary<AssetType, HashSet<string>> AssetsByType = new();
 
+        public AssetDatabase()
+        {
+            ScanFileSystemForAssets();
+        }
+
         public Asset GetAsset(string id)
         {
             return Assets.TryGetValue(id, out var asset) ? asset : null;

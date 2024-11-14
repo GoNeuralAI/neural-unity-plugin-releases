@@ -5,5 +5,6 @@
     <Neural.TextArea name="negativePrompt" class="hide" max-length="200" />
     <ui:Toggle name="hasSeed" label="Locked Seed" class="checkbox" />
     <ui:TextField name="seed" value="0" keyboard-type="NumberPad" input-validation-type="Integer" class="input" readonly="true" />
+    <Neural.CreditCost name="creditsCost" value="1" />
     <Neural.Button name="generateBtn" text="Generate" accent="true" icon="wand" />
 </ui:UXML>

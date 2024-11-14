@@ -18,6 +18,9 @@ namespace Neural
         protected ViewportWidget Viewport;
         protected AssetElementData SelectedAsset;
 
+        protected CreditCost CreditCostElement => Root.Q<CreditCost>("creditsCost");
+        protected virtual int CreditCostAmount {  get { return 0; } }
+
         protected Component(string uxmlPath, VisualElement configContent, VisualElement assetGrid, ViewportWidget viewportWidget)
         {
             VisualTreeAsset visualTree = UnityEditor.AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(uxmlPath);
@@ -31,6 +34,7 @@ namespace Neural
             ConfigContent = configContent;
             AssetGrid = assetGrid;
             Viewport = viewportWidget;
+            _ = Context.Billing.UpdateBilling();
             InitializeUI();
         }
 
@@ -49,6 +53,7 @@ namespace Neural
             ConfigContent.Add(Root);
             AssetGrid.RegisterCallback<GeometryChangedEvent>(OnAssetGridGeometryChanged);
             Viewport.OnButtonImportClicked += OnButtonImportClicked;
+            CreditCostElement?.SetValue(CreditCostAmount.ToString());
         }
 
         protected float GridElementWidth()

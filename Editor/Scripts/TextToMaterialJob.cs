@@ -29,6 +29,8 @@ namespace Neural
         {
             SetStatusRunning();
 
+            _ = Context.Billing.UpdateBilling(5000);
+
             TextToMaterialPreviewTask previewTask = new() { 
                 Prompt = Prompt, 
                 NegativePrompt = NegativePrompt, 

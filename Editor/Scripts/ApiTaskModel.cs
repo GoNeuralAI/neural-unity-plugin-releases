@@ -50,6 +50,9 @@ namespace Neural
 
         [JsonProperty("createdAt")]
         public DateTime CreatedAt { get; set; }
+
+        [JsonProperty("creditsUsed")]
+        public int CreditsUsed { get; set; }
     }
 
     public class TaskUrls

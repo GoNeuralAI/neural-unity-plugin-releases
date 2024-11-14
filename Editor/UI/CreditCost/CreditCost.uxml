@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/CreditCost/CreditCost.uss?fileID=7433441132597879392&amp;guid=050cf75832dc90c49b0dea064523a5e5&amp;type=3#CreditCost" />
+    <ui:VisualElement class="credit-cost">
+        <ui:Label name="label" text="Cost" />
+        <ui:Label name="value" text="Library" />
+    </ui:VisualElement>
+</ui:UXML>

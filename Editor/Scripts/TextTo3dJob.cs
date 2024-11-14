@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Threading.Tasks;
 
 namespace Neural
 {
@@ -23,6 +24,8 @@ namespace Neural
         public override async void Execute()
         {
             SetStatusRunning();
+
+            _ = Context.Billing.UpdateBilling(5000);
 
             TextTo3dPreviewTask previewTask = new() { 
                 Prompt = Prompt, 

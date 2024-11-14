@@ -1,6 +1,5 @@
-using GluonGui;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Timers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -28,6 +27,10 @@ namespace Neural
         private VisualElement BtnDocumentation => rootVisualElement.Q<VisualElement>("documentation");
         private VisualElement BtnSettings => rootVisualElement.Q<VisualElement>("settings");
         private Label ComponentTitle => rootVisualElement.Q<Label>("componentTitle");
+        private Label ManageSubscriptionLink => rootVisualElement.Q<Label>("manageSubscriptionLink");
+        private Label AvailableCredits => rootVisualElement.Q<Label>("availableCredits");
+
+        Timer Timer;
 
         private Dictionary<string, string> Components = new Dictionary<string, string>
         {
@@ -37,7 +40,7 @@ namespace Neural
             { "route-textToMaterial", "Text to Material" }
         };
 
-private const float MinWidthForHorizontalLayout = 1000f;
+        private const float MinWidthForHorizontalLayout = 1000f;
 
         [MenuItem("Window/Neural AI")]
         public static void ShowExample()
@@ -55,11 +58,15 @@ private const float MinWidthForHorizontalLayout = 1000f;
             BtnBack.RegisterCallback<ClickEvent>(OnBackButtonClicked);
             BtnSettings.RegisterCallback<ClickEvent>(OnSettingsButtonClicked);
             BtnDocumentation.RegisterCallback<ClickEvent>(OnDocumentationButtonClicked);
+            ManageSubscriptionLink.RegisterCallback<ClickEvent>(OnManageSubscriptionLinkClicked);
 
             SetupViewport();
             ComponentManager = new ComponentManager(ConfigContent, AssetGrid, Viewport);
             SetupNavButtons();
             rootVisualElement.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+
+            UpdateCredits();
+            Context.Billing.OnCreditsUpdated += UpdateCredits;
         }
 
         private void SetupViewport()
@@ -129,6 +136,11 @@ private const float MinWidthForHorizontalLayout = 1000f;
             Application.OpenURL("https://docs.goneural.ai");
         }
 
+        private void OnManageSubscriptionLinkClicked(ClickEvent evt)
+        {
+            Application.OpenURL("https://app.goneural.ai/settings");
+        }
+
         private void OnGeometryChanged(GeometryChangedEvent evt)
         {
             UpdateLayout();
@@ -161,14 +173,25 @@ private const float MinWidthForHorizontalLayout = 1000f;
             }
         }
 
+        private void UpdateCredits()
+        {
+            var availableCredits = Context.Billing.Model.Credits;
+
+            var str = availableCredits == 1 ? "credit" : "credits";
+
+            AvailableCredits.text = $"{availableCredits} {str}";
+        }
+
         private void OnDestroy()
         {
             ComponentManager.DestroyAllComponents();
+            Context.Billing.OnCreditsUpdated -= UpdateCredits;
         }
 
         private void OnDisable()
         {
             ComponentManager.DestroyAllComponents();
+            Context.Billing.OnCreditsUpdated -= UpdateCredits;
         }
     }
 }

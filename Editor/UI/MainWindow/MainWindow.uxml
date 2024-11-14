@@ -4,6 +4,10 @@
     <ui:VisualElement class="root-container">
         <ui:VisualElement class="header-logo">
             <ui:VisualElement class="logo" />
+            <ui:VisualElement class="billing-container">
+                <ui:Label name="availableCredits" />
+                <ui:Label name="manageSubscriptionLink" text="Manage subscription" class="link" />
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement class="main-container">
             <ui:VisualElement name="mainPanel" class="main-panel">
@@ -23,9 +27,9 @@
                         <Neural.Icon name="btnBack" icon="chevron-left" class="btn-back" />
                     </ui:VisualElement>
                     <ui:VisualElement class="header-bottom-border" />
-                        <ui:ScrollView class="config-content-scroll">
-                            <ui:VisualElement class="config-content" name="configContent"  />
-                        </ui:ScrollView>
+                    <ui:ScrollView class="config-content-scroll">
+                        <ui:VisualElement class="config-content" name="configContent"  />
+                    </ui:ScrollView>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="secondaryPanel" class="secondary-panel">

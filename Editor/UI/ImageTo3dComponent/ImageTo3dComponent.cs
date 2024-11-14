@@ -7,16 +7,24 @@ namespace Neural
     {
         public const string UxmlPath = "Packages/com.neural.unity/Editor/UI/ImageTo3DComponent/ImageTo3dComponent.uxml";
 
-        private TextArea PromptField => Root.Q<TextArea>("prompt");
-        private Toggle HasNegativePrompt => Root.Q<Toggle>("hasNegativePrompt");
-        private TextArea NegativePromptField => Root.Q<TextArea>("negativePrompt");
-        private Toggle HasSeed => Root.Q<Toggle>("hasSeed");
-        private TextField SeedField => Root.Q<TextField>("seed");
-        private FileSelector FileSelector => Root.Q<FileSelector>("imageFileSelector");
-        private Button GenerateBtn => Root.Q<Button>("generateBtn");
+        protected TextArea PromptField => Root.Q<TextArea>("prompt");
+        protected Toggle HasNegativePrompt => Root.Q<Toggle>("hasNegativePrompt");
+        protected TextArea NegativePromptField => Root.Q<TextArea>("negativePrompt");
+        protected Toggle HasSeed => Root.Q<Toggle>("hasSeed");
+        protected TextField SeedField => Root.Q<TextField>("seed");
+        protected FileSelector FileSelector => Root.Q<FileSelector>("imageFileSelector");
+        protected Button GenerateBtn => Root.Q<Button>("generateBtn");
+
+        protected override int CreditCostAmount { get { return 1; } }
 
         public ImageTo3dComponent(VisualElement configContent, VisualElement assetGrid, ViewportWidget viewport) : base(UxmlPath, configContent, assetGrid, viewport)
         {
+        }
+
+        public override void Cleanup()
+        {
+            base.Cleanup();
+            Context.Billing.OnCreditsUpdated -= CheckGenerateBtnState;
         }
 
         protected override void InitializeUI()
@@ -54,6 +62,7 @@ namespace Neural
 
             ClearPreview();
             CheckGenerateBtnState();
+            Context.Billing.OnCreditsUpdated += CheckGenerateBtnState;
         }
 
         protected void OnGenerateBtnClicked(ClickEvent evt)
@@ -81,7 +90,32 @@ namespace Neural
 
         protected void CheckGenerateBtnState()
         {
-            GenerateBtn.SetEnabled(!string.IsNullOrEmpty(PromptField.Text) && !string.IsNullOrEmpty(FileSelector.FilePath));
+            bool isEnabled = false;
+            string tooltipText = "";
+
+            if (string.IsNullOrEmpty(PromptField.Text))
+            {
+                isEnabled = false;
+                tooltipText = "Please enter a prompt.";
+            }
+            else if (string.IsNullOrEmpty(FileSelector.FilePath))
+            {
+                isEnabled = false;
+                tooltipText = "Please select an image.";
+            }
+            else if (Context.Billing.Model.Credits < CreditCostAmount)
+            {
+                isEnabled = false;
+                tooltipText = "Insufficient credits.";
+            }
+            else
+            {
+                isEnabled = true;
+                tooltipText = "";
+            }
+
+            GenerateBtn.SetEnabled(isEnabled);
+            GenerateBtn.SetTooltip(tooltipText);
         }
     }
 }

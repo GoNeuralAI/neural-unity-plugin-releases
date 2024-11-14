@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using UnityEditor;
 
@@ -30,9 +31,6 @@ namespace Neural
 
         public static AssetDatabase AssetDatabase { get; } = new AssetDatabase();
 
-        static Context()
-        {
-            AssetDatabase.ScanFileSystemForAssets();
-        }
+        public static Billing Billing { get; } = new Billing();
     }
 }

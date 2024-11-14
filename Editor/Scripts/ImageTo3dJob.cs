@@ -26,6 +26,8 @@ namespace Neural
         {
             SetStatusRunning();
 
+            _ = Context.Billing.UpdateBilling(5000);
+
             ImageTo3dTask task = new() { 
                 Prompt = Prompt, 
                 ImageFilePath = ImageFilePath, 

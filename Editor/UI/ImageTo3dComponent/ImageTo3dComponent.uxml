@@ -7,5 +7,6 @@
     <ui:Toggle name="hasSeed" label="Locked Seed" class="checkbox" />
     <ui:TextField name="seed" value="0" keyboard-type="NumberPad" input-validation-type="Integer" class="input" readonly="true" />
     <Neural.FileSelector name="imageFileSelector" label="Image" file-type="Image Files" file-extension="png,jpg,jpeg" max-width="500" />
+    <Neural.CreditCost name="creditsCost" value="1" />
     <Neural.Button name="generateBtn" text="Generate" accent="true" icon="wand" />
 </ui:UXML>

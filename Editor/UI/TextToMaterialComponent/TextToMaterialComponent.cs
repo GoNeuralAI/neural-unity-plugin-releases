@@ -1,5 +1,5 @@
-using GluonGui;
 using UnityEngine;
+using UnityEngine.TestTools;
 using UnityEngine.UIElements;
 
 namespace Neural
@@ -15,8 +15,16 @@ namespace Neural
         private TextField SeedField => Root.Q<TextField>("seed");
         private Button GenerateBtn => Root.Q<Button>("generateBtn");
 
+        protected override int CreditCostAmount { get { return 1; } }
+
         public TextToMaterialComponent(VisualElement configContent, VisualElement assetGrid, ViewportWidget viewport) : base(UxmlPath, configContent, assetGrid, viewport)
         {
+        }
+
+        public override void Cleanup()
+        {
+            base.Cleanup();
+            Context.Billing.OnCreditsUpdated -= CheckGenerateBtnState;
         }
 
         protected override void InitializeUI()
@@ -49,6 +57,7 @@ namespace Neural
 
             ClearPreview();
             CheckGenerateBtnState();
+            Context.Billing.OnCreditsUpdated += CheckGenerateBtnState;
         }
 
         protected void OnGenerateBtnClicked(ClickEvent evt)
@@ -75,7 +84,27 @@ namespace Neural
         }
         protected void CheckGenerateBtnState()
         {
-            GenerateBtn.SetEnabled(!string.IsNullOrEmpty(PromptField.Text));
+            bool isEnabled = false;
+            string tooltipText = "";
+
+            if (string.IsNullOrEmpty(PromptField.Text))
+            {
+                isEnabled = false;
+                tooltipText = "Please enter a prompt.";
+            }
+            else if (Context.Billing.Model.Credits < CreditCostAmount)
+            {
+                isEnabled = false;
+                tooltipText = "Insufficient credits.";
+            }
+            else
+            {
+                isEnabled = true;
+                tooltipText = "";
+            }
+
+            GenerateBtn.SetEnabled(isEnabled);
+            GenerateBtn.SetTooltip(tooltipText);
         }
     }
 }

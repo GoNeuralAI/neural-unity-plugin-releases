@@ -15,6 +15,8 @@ namespace Neural
         private TextField ApiKeyField => Root.Q<TextField>("apiKey");
         //private TextField BaseUrlFIeld => Root.Q<TextField>("baseUrl");
 
+        private Label GoNeuralLink => Root.Q<Label>("goNeuralLink");
+
         public SettingsWindow(string path, SettingsScope scope = SettingsScope.Project)
             : base(path, scope) { }
 
@@ -36,6 +38,11 @@ namespace Neural
             ApiKeyField.RegisterCallback<ChangeEvent<string>>(evt =>
             {
                 Context.ApiKey = evt.newValue;
+            });
+
+            GoNeuralLink.RegisterCallback<ClickEvent>(evt =>
+            {
+                Application.OpenURL("https://app.goneural.ai/settings");
             });
 
             //BaseUrlFIeld.value = Context.BaseUrl;
