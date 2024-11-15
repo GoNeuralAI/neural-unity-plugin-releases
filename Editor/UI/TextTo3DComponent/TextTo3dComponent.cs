@@ -14,7 +14,7 @@ namespace Neural
         protected TextField SeedField => Root.Q<TextField>("seed");
         protected Button GenerateBtn => Root.Q<Button>("generateBtn");
 
-        protected override int CreditCostAmount { get { return 1; } }
+        protected override int CreditCostAmount { get { return 25; } }
 
         public TextTo3dComponent(VisualElement configContent, VisualElement assetGrid, ViewportWidget viewport) : base(UxmlPath, configContent, assetGrid, viewport)
         {

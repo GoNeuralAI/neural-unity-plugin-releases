@@ -20,7 +20,7 @@
 .file-selector-container .input .unity-text-field__input {
     border-width: 0 !important;
     height: 38px !important;
-    margin-right: 8px;
+    margin-right: 0px;
 }
 
 .file-selector-container .input:focus .unity-text-field__input {

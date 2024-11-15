@@ -15,7 +15,7 @@ namespace Neural
         private TextField SeedField => Root.Q<TextField>("seed");
         private Button GenerateBtn => Root.Q<Button>("generateBtn");
 
-        protected override int CreditCostAmount { get { return 1; } }
+        protected override int CreditCostAmount { get { return 5; } }
 
         public TextToMaterialComponent(VisualElement configContent, VisualElement assetGrid, ViewportWidget viewport) : base(UxmlPath, configContent, assetGrid, viewport)
         {
