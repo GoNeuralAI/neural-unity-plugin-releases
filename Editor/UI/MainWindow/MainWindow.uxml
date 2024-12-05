@@ -17,6 +17,7 @@
                     <Neural.Button name="route-textTo3d" text="Text to 3D" icon="text-to-3d" />
                     <Neural.Button name="route-imageTo3d" text="Image to 3D" icon="image-to-3d" />
                     <Neural.Button name="route-textToMaterial" text="Text to Material" icon="text-to-material" />
+                    <!-- <Neural.Button name="texturing" text="Texturing" icon="text-to-material" /> -->
                     <ui:VisualElement style="flex-grow: 1" />
                     <Neural.Button name="documentation" text="Documentation" icon="documentation" />
                     <Neural.Button name="settings" text="Settings" icon="settings" />

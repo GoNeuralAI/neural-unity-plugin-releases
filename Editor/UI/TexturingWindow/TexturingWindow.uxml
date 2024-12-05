@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/GlobalStyle.uss?fileID=7433441132597879392&amp;guid=a7545959e76727846b66d2f39b972fa1&amp;type=3#GlobalStyle" />
+    <Style src="project://database/Packages/com.neural.unity/Editor/UI/TexturingWindow/TexturingWindow.uss?fileID=7433441132597879392&amp;guid=308f2ccca70b97246942793cca7b9aee&amp;type=3#TexturingWindow" />
+
+    <ui:VisualElement class="main-panel">
+        <ui:ScrollView>
+            <ui:VisualElement class="content">
+                <ui:Label name="errorMsg" class="error" text="There was a problem with the generation. Check logs for more details." />
+                <Neural.TextArea name="prompt" label="Prompt" max-length="200" />
+                <ui:Toggle name="hasNegativePrompt" label="Negative Prompt" class="checkbox" />
+                <Neural.TextArea name="negativePrompt" max-length="200" class="hide" />
+                <ui:Toggle name="hasSeed" label="Locked Seed" class="checkbox" />
+                <ui:TextField name="seed" value="0" keyboard-type="NumberPad" input-validation-type="Integer" readonly="true" class="input" />
+                <Neural.CreditCost name="creditsCost" value="1" />
+                <Neural.Button name="generateBtn" text="Generate" accent="true" icon="wand" />
+            </ui:VisualElement>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

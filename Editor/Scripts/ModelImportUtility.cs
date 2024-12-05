@@ -5,7 +5,6 @@ using Assimp;
 using System.Threading.Tasks;
 using System.Threading;
 using UnityEditor;
-using System.Collections.Generic;
 
 namespace Neural
 {
@@ -15,6 +14,8 @@ namespace Neural
         {
             public Vector3[] Vertices;
             public Vector3[] Normals;
+            public Vector3[] Tangents;
+            public Vector3[] Bitangents;
             public Vector2[] UVs;
             public int[] Triangles;
             public bool HasNormals;
@@ -33,7 +34,8 @@ namespace Neural
             {
                 using (AssimpContext importer = new AssimpContext())
                 {
-                    Scene scene = importer.ImportFile(inputPath, PostProcessSteps.Triangulate | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.FlipUVs);
+                    Scene scene = importer.ImportFile(inputPath, PostProcessSteps.Triangulate);
+                    var assimpMesh = scene.Meshes[0];
 
                     // Rescale mesh to unit box
                     RescaleMeshToUnitBox(scene);
@@ -112,7 +114,7 @@ namespace Neural
             try
             {
                 var importer = new AssimpContext();
-                var scene = importer.ImportFile(glbPath);
+                var scene = importer.ImportFile(glbPath, PostProcessSteps.Triangulate);
 
                 if (scene == null || !scene.HasMeshes)
                 {
@@ -147,7 +149,7 @@ namespace Neural
 
                 for (int i = 0; i < assimpMesh.TextureCoordinateChannels[0].Count; i++)
                 {
-                    UVs[i] = new Vector2(assimpMesh.TextureCoordinateChannels[0][i].X, 1 - assimpMesh.TextureCoordinateChannels[0][i].Y);
+                    UVs[i] = new Vector2(assimpMesh.TextureCoordinateChannels[0][i].X, assimpMesh.TextureCoordinateChannels[0][i].Y);
                 }
 
                 return new MeshData
@@ -171,6 +173,7 @@ namespace Neural
             if (meshData == null) return null;
 
             UnityEngine.Mesh mesh = new UnityEngine.Mesh();
+            mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
             mesh.vertices = meshData.Vertices;
 
             if (meshData.HasNormals)
@@ -191,10 +194,13 @@ namespace Neural
                 mesh.RecalculateNormals();
             }
 
+            mesh.RecalculateTangents();
+
+
             return mesh;
         }
 
-        public static UnityEngine.Material LoadMaterial(string albedoPath, string normalsPath = null, string displacementPath = null, string metallicPath = null, string roughnessPath = null, string aoPath = null)
+        public static UnityEngine.Material LoadMaterial(string albedoPath, string normalsPath = null, string displacementPath = null, string metallicPath = null, string roughnessPath = null, string aoPath = null, bool isCombinedMetallicRoughness = false)
         {
             UnityEngine.Material material = Resources.Load<UnityEngine.Material>("Materials/PreviewMaterial");
             UnityEngine.Material materialCopy = new UnityEngine.Material(material);
@@ -232,6 +238,11 @@ namespace Neural
                 materialCopy.SetTexture("_AmbientOcclusion", aoTexture);
             }
 
+            if (isCombinedMetallicRoughness)
+            {
+                materialCopy.SetInt("_IsCombinedMetallicRoughness", 1);
+            }
+
             return materialCopy;
         }
 
@@ -244,67 +255,15 @@ namespace Neural
             return texture;
         }
 
-        public static void EmbedTexturesToGlb(string inputGlbPath, string albedoPath, string outputGlbPath)
+        public static void ExtractTexturesFromGlb(string glbPath, string outputPath, int index)
         {
             try
             {
                 using (var context = new AssimpContext())
                 {
-                    Assimp.Scene scene = context.ImportFile(inputGlbPath, PostProcessSteps.Triangulate | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.FlipUVs);
-                    scene.Materials.Clear();
-                    scene.Textures.Clear();
+                    Assimp.Scene scene = context.ImportFile(glbPath);
 
-                    // Load texture data
-                    byte[] textureData = File.ReadAllBytes(albedoPath);
-
-                    EmbeddedTexture embeddedTexture = new EmbeddedTexture("png", textureData, Path.GetFileName(albedoPath));
-                    int textureIndex = scene.Textures.Count;
-                    scene.Textures.Add(embeddedTexture);
-
-                    // Add a new material to the scene
-                    Assimp.Material material = new Assimp.Material();
-                    material.TextureDiffuse = new TextureSlot(
-                        "albedo.png",
-                        TextureType.Diffuse,
-                        0,
-                        TextureMapping.FromUV,
-                        0,
-                        1.0f,
-                        TextureOperation.Add,
-                        Assimp.TextureWrapMode.Wrap,
-                        Assimp.TextureWrapMode.Wrap,
-                        0
-                    );
-                    scene.Materials.Add(material);
-                    scene.Meshes[0].MaterialIndex = 0;
-
-                    context.ExportFile(scene, outputGlbPath, "glb2");
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Error in EmbedTexturesToGlb: {e.Message}\nStackTrace: {e.StackTrace}");
-                throw;
-            }
-        }
-
-        public static void ExtractTexturesFromGlb(string glbPath, string outputPath)
-        {
-            try
-            {
-                using (var context = new AssimpContext())
-                {
-                    Assimp.Scene scene = context.ImportFile(glbPath, PostProcessSteps.Triangulate | PostProcessSteps.GenerateSmoothNormals | PostProcessSteps.FlipUVs);
-
-                    if (scene.Materials.Count == 0)
-                    {
-                        Debug.LogError("No materials found in the GLB file.");
-                        return;
-                    }
-
-                    Assimp.Material material = scene.Materials[0];
-
-                    File.WriteAllBytes(outputPath, scene.Textures[material.TextureDiffuse.TextureIndex].CompressedData);
+                    File.WriteAllBytes(outputPath, scene.Textures[index].CompressedData);
                 }
             }
             catch (Exception e)
@@ -346,7 +305,7 @@ namespace Neural
             return material;
         }
 
-        private static string GetRenderPipelineShader()
+        public static string GetRenderPipelineShader()
         {
             string[] shaderNames = {
                 "Universal Render Pipeline/Lit",  // URP

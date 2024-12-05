@@ -20,6 +20,7 @@ namespace Neural
         TextTo3D,
         ImageTo3D,
         Material,
+        Texturing
     }
 
     public abstract class Job

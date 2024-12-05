@@ -42,11 +42,11 @@ namespace Neural
 
         private const float MinWidthForHorizontalLayout = 1000f;
 
-        [MenuItem("Window/Neural AI")]
-        public static void ShowExample()
+        [MenuItem("Window/Neural")]
+        public static void OpenWindow()
         {
             MainWindow wnd = GetWindow<MainWindow>();
-            wnd.titleContent = new GUIContent("Neural AI");
+            wnd.titleContent = new GUIContent("Neural");
         }
 
         public void CreateGUI()
@@ -87,6 +87,13 @@ namespace Neural
                 {
                     button.RegisterCallback<ClickEvent>(evt => LoadComponent(button.name));
                 }
+            }
+
+            var texturingButton = Navigation.Q<Button>("texturing");
+
+            if (texturingButton != null)
+            {
+                texturingButton.RegisterCallback<ClickEvent>(evt => TexturingWindow.OpenWindow());
             }
         }
 
@@ -184,13 +191,21 @@ namespace Neural
 
         private void OnDestroy()
         {
-            ComponentManager.DestroyAllComponents();
+            if (ComponentManager != null)
+            {
+                ComponentManager.DestroyAllComponents();
+            }
+            
             Context.Billing.OnCreditsUpdated -= UpdateCredits;
         }
 
         private void OnDisable()
         {
-            ComponentManager.DestroyAllComponents();
+            if (ComponentManager != null)
+            {
+                ComponentManager.DestroyAllComponents();
+            }
+
             Context.Billing.OnCreditsUpdated -= UpdateCredits;
         }
     }

@@ -30,19 +30,16 @@ void ibl_float(
     float3 V = normalize(_CameraPosition - _WorldPosition);
 
     // Calculate TBN matrix
-    float3x3 TBN = float3x3(normalize(_WorldTangent), normalize(_WorldBitangent), normalize(_WorldNormal));
+    float3x3 TBN = transpose(float3x3(normalize(_WorldTangent), normalize(_WorldBitangent), normalize(_WorldNormal)));
+    
+    _Normal = pow(_Normal, 2.2);
+    _Roughness = pow(_Roughness, 1 / 2.5);
 
     // Convert normal from [0, 1] to [-1, 1] range
-    float3 N = 2.0 * _Normal - 1.0;
-
-    // Transform normal from tangent space to world space
-    N = normalize(mul(TBN, _Normal));
-
+    float3 N = normalize(mul(TBN, _Normal));
+    
     // Calculate reflection vector
     float3 R = reflect(-V, N);
-
-    // Linearize the roughness
-    _Roughness *= _Roughness;
     
     // Calculate diffuse and specular colors
     float3 F0 = lerp(float3(0.04, 0.04, 0.04), _Albedo, _Metallic);
@@ -50,7 +47,7 @@ void ibl_float(
     // Calculate reflectance at normal incidence using the Fresnel equation
     float3 kS = lerp(fresnelSchlick(max(dot(N, V), 0.0), F0), float3(0.0, 0.0, 0.0), _Roughness);
     float3 kD = (float3(1.0, 1.0, 1.0) - kS) * (1.0 - _Metallic);
-
+    
     // Sample diffuse irradiance
     float2 uv = longLatToUv(_Normal);
     float3 irradiance = SAMPLE_TEXTURE2D_LOD(_CubemapDiffuse, sampler_CubemapDiffuse, uv, 8).rgb;
@@ -65,7 +62,7 @@ void ibl_float(
     float2 brdf = SAMPLE_TEXTURE2D(_BRDFLUT, sampler_BRDFLUT, float2(max(dot(N, V), 0.0), _Roughness)).rg;
 
     // Calculate the specular color
-    float3 specular = prefilteredColor * (kS * brdf.x + brdf.y) * (1.0 - _Roughness);
+    float3 specular = prefilteredColor * (kS * brdf.x + brdf.y) * (1.0 - _Roughness) * 1.0;
 
     // Combine diffuse and specular contributions and apply ambient occlusion
     _FragmentColor = (diffuse + specular) * _AmbientOcclusion;

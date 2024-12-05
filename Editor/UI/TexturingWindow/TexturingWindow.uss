@@ -1,0 +1,23 @@
+.main-panel {
+    flex-grow: 1;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background-default);
+}
+
+.content {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+.error {
+    display: none;
+    color: red;
+    -unity-text-align: middle-left;
+    white-space: normal;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 100%;
+}

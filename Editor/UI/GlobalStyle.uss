@@ -161,7 +161,10 @@
     border-radius: 8px;
     margin: 4px 0;
     transition-duration: 0.1s;
-    cursor: link;
+}
+
+.button:enabled {
+    cursor: link;    
 }
 
 .button:enabled:hover {
@@ -172,6 +175,9 @@
     width: 20px;
     height: 20px;
     margin: 12px 0 12px 12px;
+}
+
+.button:enabled .unity-image {
     cursor: link;
 }
 
@@ -181,7 +187,10 @@
     margin: 12px;
     -unity-text-align: middle-left;
     -unity-font-style: bold;
-    cursor: link;
+}
+
+.button:enabled .unity-label {
+	cursor: link;
 }
 
 .button-secondary {
@@ -300,4 +309,19 @@ icon:disabled .icon-image {
 
 .link:hover {
     color: var(--color-button-primary-hover);
+}
+
+.divider {
+	width: 100%;
+	height: 1px;
+	margin: 8px 0;
+	background-color: var(--color-button-outlines);
+}
+
+.mt-3 {
+    margin-top: 12px;
+}
+
+.mt-5 {
+    margin-top: 20px;
 }

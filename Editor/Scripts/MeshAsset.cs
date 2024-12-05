@@ -12,8 +12,12 @@ namespace Neural
         public string Prompt;
         public string NegativePrompt;
         public int Seed;
+        public int FaceLimit;
+        public bool Pbr;
         public string MeshFileName;
         public string AlbedoFileName;
+        public string MetallicRoughnessFileName;
+        public string NormalsFileName;
 
         public override AssetType GetAssetType()
         {
@@ -24,11 +28,20 @@ namespace Neural
         {
             base.SerializeAsset(json);
 
+
             json["Prompt"] = Prompt;
             json["NegativePrompt"] = NegativePrompt;
             json["Seed"] = Seed;
+            json["FaceLimit"] = FaceLimit;
+            json["Pbr"] = Pbr;
             json["MeshFileName"] = MeshFileName;
             json["AlbedoFileName"] = AlbedoFileName;
+
+            if (Pbr)
+            {
+                json["MetallicRoughnessFileName"] = MetallicRoughnessFileName;
+                json["NormalsFileName"] = NormalsFileName;
+            }
         }
 
         public override bool DeserializeAsset(JObject json)
@@ -59,6 +72,22 @@ namespace Neural
 
             Seed = seedString.Value<int>();
 
+            if (!json.TryGetValue("FaceLimit", out var faceLimitString))
+            {
+                Debug.LogError("Failed to deserialize MeshAsset. FaceLimit not found.");
+                return false;
+            }
+
+            FaceLimit = faceLimitString.Value<int>();
+
+            if (!json.TryGetValue("Pbr", out var pbrString))
+            {
+                Debug.LogError("Failed to deserialize MeshAsset. Pbr not found.");
+                return false;
+            }
+
+            Pbr = pbrString.Value<bool>();
+
             if (!json.TryGetValue("MeshFileName", out var meshFileNameString))
             {
                 Debug.LogError("Failed to deserialize MeshAsset. MeshFileName not found.");
@@ -75,6 +104,25 @@ namespace Neural
 
             AlbedoFileName = albedoFileNameString.Value<string>();
 
+            if (Pbr)
+            {
+                if (!json.TryGetValue("MetallicRoughnessFileName", out var metallicRoughnessFileNameString))
+                {
+                    Debug.LogError("Failed to deserialize MeshAsset. MetallicRoughnessFileName not found.");
+                    return false;
+                }
+
+                MetallicRoughnessFileName = metallicRoughnessFileNameString.Value<string>();
+
+                if (!json.TryGetValue("NormalsFileName", out var normalsFileNameString))
+                {
+                    Debug.LogError("Failed to deserialize MeshAsset. NormalsFileName not found.");
+                    return false;
+                }
+
+                NormalsFileName = normalsFileNameString.Value<string>();
+            }
+
             return true;
         }
 
@@ -85,7 +133,14 @@ namespace Neural
 
         public override Material LoadMaterial()
         {
-            return ModelImport.LoadMaterial(GetFilePath(AlbedoFileName));
+            if (!Pbr)
+            {
+                return ModelImport.LoadMaterial(GetFilePath(AlbedoFileName));
+            }
+            else
+            {
+                return ModelImport.LoadMaterial(GetFilePath(AlbedoFileName), GetFilePath(NormalsFileName), null, GetFilePath(MetallicRoughnessFileName), null, null, true);
+            }
         }
 
         public override void ImportInScene()
@@ -93,7 +148,7 @@ namespace Neural
             string assetSavePath = "Assets/Neural/Meshes";
             string outputPath = Path.Combine(assetSavePath, $"Model_{Id.Substring(0, 6)}.glb");
             Directory.CreateDirectory(assetSavePath);
-            ModelImport.EmbedTexturesToGlb(GetFilePath(MeshFileName), GetFilePath(AlbedoFileName), outputPath);
+            File.Copy(GetFilePath(MeshFileName), outputPath, true);
 
             UnityEditor.AssetDatabase.Refresh();
 

@@ -122,7 +122,7 @@ namespace Neural
         public void ScanFileSystemForAssets()
         {
             string assetsPath = GetAssetsPath();
-            Debug.Log($"Scanning assets directory {assetsPath}");
+            //Debug.Log($"Scanning assets directory {assetsPath}");
 
             if (!Directory.Exists(assetsPath))
             {
@@ -195,6 +195,9 @@ namespace Neural
                         break;
                     case AssetType.Material:
                         asset = new MaterialAsset();
+                        break;
+                    case AssetType.Texture:
+                        asset = new TexturingAsset();
                         break;
                     default:
                         Debug.LogError($"Unknown asset type {typeString}");

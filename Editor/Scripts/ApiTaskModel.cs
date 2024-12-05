@@ -45,6 +45,10 @@ namespace Neural
         [JsonConverter(typeof(TaskUrlsConverter))]
         public TaskUrls Urls { get; set; }
 
+        [JsonProperty("outputs")]
+        [JsonConverter(typeof(TaskUrlsConverter))]
+        public TaskUrls Outputs { get; set; }
+
         [JsonProperty("finishedAt")]
         public DateTime? FinishedAt { get; set; }
 

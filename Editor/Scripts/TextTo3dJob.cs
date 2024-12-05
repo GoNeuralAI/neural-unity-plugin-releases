@@ -9,16 +9,22 @@ namespace Neural
         protected string Prompt { get; private set; }
         protected string NegativePrompt { get; private set; }
         protected int Seed { get; private set; }
+        protected int FaceLimit { get; private set; }
+        protected bool Pbr { get; private set; }
 
         protected const string GlbOriginalFileName = "mesh_orig.glb";
         protected const string GlbFileName = "mesh.glb";
         protected const string AlbedoFileName = "albedo.png";
+        protected const string MetallicRoughnessFileName = "metallicRoughness.png";
+        protected const string NormalsFileName = "normals.png";
 
-        public TextTo3dJob (string prompt, string negativePrompt = "", int seed = 0)
+        public TextTo3dJob (string prompt, string negativePrompt = "", int seed = 0, int faceLimit = 0, bool pbr = false)
         {
             Prompt = prompt;
             NegativePrompt = negativePrompt;
             Seed = seed;
+            FaceLimit = faceLimit;
+            Pbr = pbr;
         }
 
         public override async void Execute()
@@ -30,7 +36,9 @@ namespace Neural
             TextTo3dPreviewTask previewTask = new() { 
                 Prompt = Prompt, 
                 NegativePrompt = NegativePrompt, 
-                Seed = Seed
+                Seed = Seed,
+                FaceLimit = FaceLimit,
+                Pbr = Pbr
             };
 
             await previewTask.Execute();
@@ -41,21 +49,12 @@ namespace Neural
                 return;
             }
 
-            SetProgress(0.33f);
-            TextTo3dOptimizeTask optimizeTask = new TextTo3dOptimizeTask { TaskId = previewTask.CompletedTask.Id };
-            await optimizeTask.Execute();
-
-            if (!optimizeTask.IsSuccessful())
-            {
-                SetStatusFailed();
-                return;
-            }
-
-            SetProgress(0.66f);
+            SetProgress(0.5f);
 
             try
             {
-                await DownloadFile(optimizeTask.CompletedTask.Urls.Glb, GlbOriginalFileName);
+
+                await DownloadFile(previewTask.CompletedTask.Urls.Glb, GlbOriginalFileName);
             } 
             catch (System.Exception e)
             {
@@ -65,9 +64,16 @@ namespace Neural
             }
 
             await ModelImport.ProcessGlbAsync(GetFilePath(GlbOriginalFileName), GetFilePath(GlbFileName));
-            ModelImport.ExtractTexturesFromGlb(GetFilePath(GlbFileName), GetFilePath(AlbedoFileName));
 
-            SetProgress(1f);
+            ModelImport.ExtractTexturesFromGlb(GetFilePath(GlbFileName), GetFilePath(AlbedoFileName), 0);
+
+            if (Pbr)
+            {
+                ModelImport.ExtractTexturesFromGlb(GetFilePath(GlbFileName), GetFilePath(MetallicRoughnessFileName), 1);
+                ModelImport.ExtractTexturesFromGlb(GetFilePath(GlbFileName), GetFilePath(NormalsFileName), 2);
+            }
+
+        SetProgress(1f);
             SetStatusCompleted();
         }
 
@@ -79,8 +85,12 @@ namespace Neural
             asset.Prompt = Prompt;
             asset.NegativePrompt = NegativePrompt;
             asset.Seed = Seed;
+            asset.FaceLimit = FaceLimit;
+            asset.Pbr = Pbr;
             asset.MeshFileName = GlbFileName;
             asset.AlbedoFileName = AlbedoFileName;
+            asset.MetallicRoughnessFileName = MetallicRoughnessFileName;
+            asset.NormalsFileName = NormalsFileName;
 
             var meshPath = GetFilePath(GlbFileName);
             if (!asset.AddFile(meshPath, GlbFileName))
@@ -96,6 +106,25 @@ namespace Neural
                 return null;
             }
 
+            if (Pbr)
+            {
+                var metallicRoughnessPath = GetFilePath(MetallicRoughnessFileName);
+
+                if (!asset.AddFile(metallicRoughnessPath, MetallicRoughnessFileName))
+                {
+                    Debug.LogError("Failed to add metallicRoughness file to asset.");
+                    return null;
+                }
+
+                var normalsPath = GetFilePath(NormalsFileName);
+
+                if (!asset.AddFile(normalsPath, NormalsFileName))
+                {
+                    Debug.LogError("Failed to add normals file to asset.");
+                    return null;
+                }
+            }
+            
             return asset;
         }
     }

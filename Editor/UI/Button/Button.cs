@@ -98,5 +98,11 @@ namespace Neural
             Tooltip = tooltip;
             Root.tooltip = tooltip;
         }
+
+        public void SetText(string text)
+        {
+            Text = text;
+            LabelElement.text = text;
+        }
     }
 }

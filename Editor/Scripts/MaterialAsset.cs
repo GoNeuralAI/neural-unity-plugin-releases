@@ -133,7 +133,6 @@ namespace Neural
 
         public override void ImportInScene()
         {
-            Debug.Log("Import material in scene: " + Id);
             string assetSavePath = $"Assets/Neural/Materials/{Id.Substring(0, 6)}";
             Directory.CreateDirectory(assetSavePath);
             Material material = ModelImport.ImportMaterial(

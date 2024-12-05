@@ -54,6 +54,7 @@ namespace Neural
                 }
 
                 string jsonResult = request.downloadHandler.text;
+                //Debug.Log("Response: " + jsonResult);
                 return JsonConvert.DeserializeObject<T>(jsonResult);
             }
         }
@@ -93,6 +94,7 @@ namespace Neural
                 }
 
                 string jsonResult = request.downloadHandler.text;
+                //Debug.Log("Response: " + jsonResult);
                 return JsonConvert.DeserializeObject<TResponse>(jsonResult);
             } finally
             {

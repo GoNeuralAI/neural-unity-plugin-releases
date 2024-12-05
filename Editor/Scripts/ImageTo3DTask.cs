@@ -10,8 +10,9 @@ namespace Neural
         public string Prompt { get; set; }
         public int? Seed { get; set; }
         public string NegativePrompt { get; set; }
-
         public string ImageFilePath { get; set; }
+        public int FaceLimit { get; set; }
+        public bool Pbr { get; set; }
 
         protected override Task<ApiTaskModel> ExecuteInternal()
         {
@@ -28,6 +29,7 @@ namespace Neural
             {
                 form.AddField("prompt", Prompt ?? string.Empty);
                 form.AddBinaryData("image", imageData, fileName, "image/png");
+                form.AddField("version", "premium-v1");
 
                 if (Seed.HasValue)
                 {
@@ -37,6 +39,16 @@ namespace Neural
                 if (!string.IsNullOrEmpty(NegativePrompt))
                 {
                     form.AddField("negativePrompt", NegativePrompt);
+                }
+
+                if (FaceLimit > 0)
+                {
+                    form.AddField("faceLimit", FaceLimit.ToString());
+                }
+
+                if (Pbr)
+                {
+                    form.AddField("pbr", "true");
                 }
             }
             catch (Exception formEx)

@@ -18,7 +18,7 @@ namespace Neural
         public float PreviewMeshScale = 1.8f;
 
         private int FrameRateLimit = -1;
-        private int Supersampling = 1;
+        private int Supersampling = 2;
         private bool ShowGrid = true;
         private bool ShowWireframe = false;
         private bool ShowTextures = true;

@@ -48,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _CubemapSpecular:
-        m_Texture: {fileID: 8900000, guid: cc97b0ded994ead408e3beaadad0c081, type: 3}
+        m_Texture: {fileID: 8900000, guid: 31142edf62e02b74fb1858bdd0565d9d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -125,7 +125,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _CameraPosition: {r: 5.7478547, g: 7.128629, b: 3.2065814, a: 0}
+    - _CameraPosition: {r: -0.9098186, g: 7.128629, b: -6.518606, a: 0}
     - _Color: {r: 0.22841759, g: 0.8207547, b: 0.28273028, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

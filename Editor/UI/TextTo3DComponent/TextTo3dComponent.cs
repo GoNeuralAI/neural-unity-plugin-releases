@@ -12,6 +12,8 @@ namespace Neural
         protected TextArea NegativePromptField => Root.Q<TextArea>("negativePrompt");
         protected Toggle HasSeed => Root.Q<Toggle>("hasSeed");
         protected TextField SeedField => Root.Q<TextField>("seed");
+        protected TextField FaceLimit => Root.Q<TextField>("faceLimit");
+        protected Toggle HasPbr => Root.Q<Toggle>("hasPbr");
         protected Button GenerateBtn => Root.Q<Button>("generateBtn");
 
         protected override int CreditCostAmount { get { return 25; } }
@@ -45,6 +47,31 @@ namespace Neural
                 SeedField.isReadOnly = !evt.newValue;
             });
 
+            FaceLimit.value = Context.DefaultFaceLimit.ToString();
+            FaceLimit.RegisterCallback<ChangeEvent<string>>(evt =>
+            {
+                int faceLimit = 0;
+                if (!int.TryParse(FaceLimit.text, out faceLimit))
+                {
+                    Debug.LogWarning("Invalid face limit value. Using default (0).");
+                }
+
+                if (faceLimit > 250000)
+                {
+                    Debug.LogWarning("Face limit value is too high. Using maximum (250000).");
+                    faceLimit = 250000;
+                    FaceLimit.value = faceLimit.ToString();
+                }
+
+                Context.DefaultFaceLimit = faceLimit;
+            });
+
+            HasPbr.value = Context.DefaultPbr;
+            HasPbr.RegisterCallback<ChangeEvent<bool>>(evt =>
+            {
+                Context.DefaultPbr = evt.newValue;
+            });
+
             GenerateBtn.RegisterCallback<ClickEvent>(OnGenerateBtnClicked);
 
             var jobs = Context.JobController.GetJobsByType(JobType.TextTo3D);
@@ -76,7 +103,16 @@ namespace Neural
                 SeedField.value = seed.ToString();
             }
 
-            var job = new TextTo3dJob(PromptField.Text, negativePrompt, seed);
+            int faceLimit = 0;
+            if (!string.IsNullOrEmpty(FaceLimit.text))
+            {
+                if (!int.TryParse(FaceLimit.text, out faceLimit))
+                {
+                    Debug.LogWarning("Invalid face limit value. Using default (0).");
+                }
+            }
+
+            var job = new TextTo3dJob(PromptField.Text, negativePrompt, seed, faceLimit, HasPbr.value);
             job.Execute();
             ConfigureJob(job);
             Context.JobController.AddJob(job);

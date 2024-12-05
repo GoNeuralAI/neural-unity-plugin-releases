@@ -14,6 +14,7 @@ namespace Neural
         Unknown,
         Mesh,
         Material,
+        Texture
     }
 
     public abstract class Asset
@@ -23,6 +24,7 @@ namespace Neural
         public DateTime CreatedAt;
         public string AssetPath;
         public bool IsFavorite = false;
+        public double CreditsUsed = 0;
 
         public Asset()
         {
@@ -71,6 +73,8 @@ namespace Neural
                     return "Mesh";
                 case AssetType.Material:
                     return "Material";
+                case AssetType.Texture:
+                    return "Texture";
                 default:
                     return "Unknown";
             }
@@ -84,6 +88,8 @@ namespace Neural
                     return AssetType.Mesh;
                 case "Material":
                     return AssetType.Material;
+                case "Texture":
+                    return AssetType.Texture;
                 default:
                     return AssetType.Unknown;
             }
@@ -95,6 +101,7 @@ namespace Neural
             json["Type"] = TypeToString(GetAssetType());
             json["CreatedAt"] = CreatedAt.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
             json["IsFavorite"] = IsFavorite;
+            json["CreditsUsed"] = CreditsUsed;
         }
 
         public virtual bool DeserializeAsset(JObject json)
@@ -122,6 +129,13 @@ namespace Neural
             }
 
             IsFavorite = isFavorite.Value<bool>();
+
+            if (!json.TryGetValue("CreditsUsed", out var creditsUsed))
+            {
+                Debug.LogError("Failed to deserialize Asset. CreditsUsed not found.");
+            }
+
+            CreditsUsed = creditsUsed.Value<double>();
 
             return true;
         }
