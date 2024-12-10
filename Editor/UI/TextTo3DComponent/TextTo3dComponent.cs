@@ -128,11 +128,6 @@ namespace Neural
                 isEnabled = false;
                 tooltipText = "Please enter a prompt.";
             }
-            else if (Context.Billing.Model.Credits < CreditCostAmount)
-            {
-                isEnabled = false;
-                tooltipText = "Insufficient credits.";
-            }
             else
             {
                 isEnabled = true;

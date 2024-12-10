@@ -159,11 +159,6 @@ namespace Neural
                 isEnabled = false;
                 tooltipText = "Please select at least one object.";
             }
-            else if (Context.Billing.Model.Credits < CreditCostAmount)
-            {
-                isEnabled = false;
-                tooltipText = "Insufficient credits.";
-            }
             else
             {
                 isEnabled = true;
