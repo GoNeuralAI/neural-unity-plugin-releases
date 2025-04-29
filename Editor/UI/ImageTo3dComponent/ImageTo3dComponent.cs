@@ -17,7 +17,7 @@ namespace Neural
         protected FileSelector FileSelector => Root.Q<FileSelector>("imageFileSelector");
         protected Button GenerateBtn => Root.Q<Button>("generateBtn");
 
-        protected override int CreditCostAmount { get { return 30; } }
+        protected override int CreditCostAmount { get { return 25; } }
 
         public ImageTo3dComponent(VisualElement configContent, VisualElement assetGrid, ViewportWidget viewport) : base(UxmlPath, configContent, assetGrid, viewport)
         {

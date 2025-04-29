@@ -16,7 +16,7 @@ namespace Neural
         protected Toggle HasPbr => Root.Q<Toggle>("hasPbr");
         protected Button GenerateBtn => Root.Q<Button>("generateBtn");
 
-        protected override int CreditCostAmount { get { return 25; } }
+        protected override int CreditCostAmount { get { return 15; } }
 
         public TextTo3dComponent(VisualElement configContent, VisualElement assetGrid, ViewportWidget viewport) : base(UxmlPath, configContent, assetGrid, viewport)
         {

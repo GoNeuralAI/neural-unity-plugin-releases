@@ -145,7 +145,7 @@ namespace Neural
 
         private void OnManageSubscriptionLinkClicked(ClickEvent evt)
         {
-            Application.OpenURL("https://app.goneural.ai/settings");
+            Application.OpenURL("https://app.goneural.ai/account");
         }
 
         private void OnGeometryChanged(GeometryChangedEvent evt)

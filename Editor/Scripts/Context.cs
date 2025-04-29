@@ -38,7 +38,7 @@ namespace Neural
 
         public static string GetAppDataPath()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Neural");
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Neural", "Unity");
         }
 
         public static JobController JobController { get; } = new JobController();

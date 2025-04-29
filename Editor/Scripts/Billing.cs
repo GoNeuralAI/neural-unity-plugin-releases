@@ -1,12 +1,23 @@
 using Newtonsoft.Json;
+using UnityEngine;
 using System.Threading.Tasks;
+using System;
 
 namespace Neural
 {
+    public class SubscriptionInfo
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+    }
+
     public struct ApiBillingModel
     {
         [JsonProperty("subscription")]
-        public string Subscription { get; set; }
+        public SubscriptionInfo Subscription { get; set; }
 
         [JsonProperty("remaining")]
         public int Credits { get; set; }
