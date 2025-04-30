@@ -125,7 +125,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _CameraPosition: {r: 3.8659222, g: 2.6538563, b: -0.49360308, a: 0}
+    - _CameraPosition: {r: 6.0340896, g: 7.128629, b: 2.6286423, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
